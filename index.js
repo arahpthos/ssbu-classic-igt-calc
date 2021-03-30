@@ -1,3 +1,35 @@
+function addGameTimer()
+{
+	// Dereference the Game Timer table
+	let gametimer = document.getElementById('game-timer');
+	
+	// Create a new table row element
+	let tr = document.createElement('tr');
+	
+	// Increment the number of items in the game timers table
+	document.timers++;
+	
+	// Set the id for the game timer table row to game-timer-(current row)
+	tr.id = 'game-timer-' + document.timers;
+	
+	
+	tr.innerHTML = "<td><form class='form-group'>" + 
+				   "<input type='number' class='form-control' id='game-min-" + document.timers + 
+				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
+				   "<td><form class='form-group'>" + 
+				   "<input type='number' class='form-control' id='game-sec-" + document.timers + 
+				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
+				   "<td><form class='form-group'>" + 
+				   "<input type='number' class='form-control' id='game-ms-" + document.timers + 
+				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
+				   "<td><form class='form-group'>" + 
+				   "<button type='button' class='btn btn-danger' onclick='" + 
+				   'rmvGameTimer("game-timer-' + document.timers + '")' + "'> Remove </button></td>";
+				   
+	// Add the new row to the parent table
+	gametimer.appendChild(tr);
+}
+
 // updateIngameTime(): void
 function updateIngameTime()
 {
@@ -155,4 +187,9 @@ $(document).ready(function(){
 			console.error('Clipboard interaction not supported by browser.');
 		}
 	});
+
+	// Add a game timer object to the page
+	addGameTimer();
+
+});
 });
