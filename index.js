@@ -21,10 +21,7 @@ function addGameTimer()
 				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
 				   "<td><form class='form-group'>" + 
 				   "<input type='number' class='form-control' id='game-ms-" + document.timers + 
-				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
-				   "<td><form class='form-group'>" + 
-				   "<button type='button' class='btn btn-danger' onclick='" + 
-				   'rmvGameTimer("game-timer-' + document.timers + '")' + "'> Remove </button></td>";
+				   "' value=0 min=0 onChange='updateIngameTime()'</td>";
 				   
 	// Add the new row to the parent table
 	gametimer.appendChild(tr);
