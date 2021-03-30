@@ -125,7 +125,7 @@ function updateIngameTime()
 		base += (bonus[0]*3600) + (bonus[1]*60) + bonus[2]
 		
 		table.push(Math.floor(base / 3600));
-		table.push(Math.floor(base % 3600));
+		table.push(Math.floor((base % 3600)/60));
 		table.push(Math.round(base % 60));
 
 		// Return the table to the calling process
