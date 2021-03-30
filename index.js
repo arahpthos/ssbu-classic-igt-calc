@@ -1,11 +1,3 @@
-// Global Variable - Records the timer ID we are up to
-// Gets incremented each time a new ingame time is added
-document.timers = 0;
-
-// addGameTimer(): void
-// Adds a new game timer row to the form, is triggered
-// when the 'add new' button is clicked on the game timer form.
-// Increments the document.timers variable.
 function addGameTimer()
 {
 	// Dereference the Game Timer table
@@ -29,32 +21,10 @@ function addGameTimer()
 				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
 				   "<td><form class='form-group'>" + 
 				   "<input type='number' class='form-control' id='game-ms-" + document.timers + 
-				   "' value=0 min=0 onChange='updateIngameTime()'</td>" + 
-				   "<td><form class='form-group'>" + 
-				   "<button type='button' class='btn btn-danger' onclick='" + 
-				   'rmvGameTimer("game-timer-' + document.timers + '")' + "'> Remove </button></td>";
+				   "' value=0 min=0 onChange='updateIngameTime()'</td>";
 				   
 	// Add the new row to the parent table
 	gametimer.appendChild(tr);
-}
-
-// rmvGameTimer(id: string): void
-// Removes the element (game timer row) from the form
-// which is provided as an argument. Can be used to 
-// delete other objects, however this function is purely
-// intended to delete rows from the 'game timer' table.
-function rmvGameTimer(id)
-{
-	console.log(id);
-	
-	// Get the row from the table using the provided id
-	tr = document.getElementById(id);
-	
-	// Remove the item from the page
-	tr.remove();
-	
-	// Update ingame time table
-	updateIngameTime();
 }
 
 // updateIngameTime(): void
@@ -143,17 +113,17 @@ function updateIngameTime()
 		// If the minutes sum is greater than 0, 
 		// Set the base to 300 (1 * 5 * 60)
 		// Otherwise, set the base to 0 (0 * 5 * 60)
-		let base = gsum[0] ? game.length * 300: 0;
+		let base = 0;
 		
 		// Deduct the game timer from the base time generated
-		base -= (gsum[0]*60) + gsum[1] + (gsum[2]/100)
+		base -= (gsum[0]*3600) + (gsum[1]*60) + gsum[2]
 		
 		// Add the bonus time to the base time generated
-		base += (bonus[0]*60) + bonus[1] + (bonus[2]/100)
+		base += (bonus[0]*3600) + (bonus[1]*60) + bonus[2]
 		
-		table.push(Math.floor(base / 60));
-		table.push(Math.floor(base % 60));
-		table.push(Math.round(1000 * (base % 1)));
+		table.push(Math.floor(base / 3600));
+		table.push(Math.floor((base % 3600)/60));
+		table.push(Math.round(base % 60));
 
 		// Return the table to the calling process
 		return table;
@@ -214,15 +184,8 @@ $(document).ready(function(){
 			console.error('Clipboard interaction not supported by browser.');
 		}
 	});
-	
-	// Program initially starts with 7 game timer rows,
-	// as 7 is the minimum number of rounds you can have
-	// in a classic mode set.
-	
-	// Loop over 7 times
-	for(let i=0; i<7; i++)
-	{
-		// Add an initial game timer object to the page
-		addGameTimer();
-	}
+
+	// Add a game timer object to the page
+	addGameTimer();
+
 });
